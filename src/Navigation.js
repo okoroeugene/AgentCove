@@ -57,7 +57,11 @@ export const goHome = () => Navigation.setRoot({
                             component: {
                                 id: "Drawer",
                                 name: "cove.Drawer"
-                            }
+                            },
+                            width: 260,
+                            height: 270,
+                            visible: false,
+                            enabled: true
                         },
                         center: {
                             stack: {

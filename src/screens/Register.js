@@ -37,14 +37,21 @@ class Register extends Component {
     };
 
     doRegister(credentials) {
-        axios.post(`http://192.168.10.10:9000/register`, credentials).then(function (response) {
-            this.showLoader('Please wait...')
-            AsyncStorage.setItem("TOKEN", response.data.token);
+        this.showLoader('Please wait...')
+        axios.post(`https://agentscove.com/parser/api?email=${this.email}&name=${this.username}&signup=true`, credentials).then((response) => {
+            this.hideLoader();
+            if (response.data.data[0].error) {
+                alert(response.data.data[0].response)
+            } else{
+                alert(response.data.data[0].response)
+            }
+            // AsyncStorage.setItem("TOKEN", response.data.token);
             // this.props.navigator.push({
             //     screen: "uwe.Home",
             //     title: "Home"
             // })
-            goHome();
+            // goHome();
+            console.log(response.data);
         }).catch(function (err) {
             if (err) {
                 this.hideLoader();

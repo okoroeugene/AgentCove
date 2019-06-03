@@ -56,9 +56,15 @@ class Login extends Component {
 
     doLogin(credentials) {
         this.showLoader('Logging In...')
-        axios.post(`http://192.168.10.10:9000/login`, credentials).then(function (response) {
-            AsyncStorage.setItem("TOKEN", response.data.token);
-            goHome();
+        axios.post(`https://agentscove.com/parser/api?email=${this.email}&password=${this.password}&signin=true`, credentials).then((response) => {
+            // AsyncStorage.setItem("TOKEN", response.data.token);
+            if (response.data.data[0].error) {
+                alert(response.data.data[0].response)
+            } else {
+                AsyncStorage.setItem("TOKEN", this.email);
+                goHome();
+            }
+            this.hideLoader();
         }).catch(function (err) {
             if (err) {
                 this.hideLoader();
@@ -94,9 +100,9 @@ class Login extends Component {
                             <Item rounded last>
                                 <Label style={styles.placeholder}><Icon style={styles.defaultGrayTextColor} name="person" /></Label>
                                 <Input
-                                    placeholder="username"
+                                    placeholder="email"
                                     placeholderTextColor="#CCC"
-                                    onChangeText={u => this.username = u}
+                                    onChangeText={u => this.email = u}
                                     autoCapitalize={"none"}
                                     style={styles.inputFormStyle}
                                 />

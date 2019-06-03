@@ -33,24 +33,25 @@ class Splash extends Component {
     }
 
     componentDidMount() {
-        goHome()
-        // AsyncStorage.getItem("TOKEN")
-        //     .then(token => {
-        //         if (!token) {
-        //             return setTimeout(() => goToAuth(), 4000)
-        //         }
-        //         let data = {
-        //             token: token
-        //         }
-        //         axios.post(`http://192.168.10.10:9000/verify`, data).then(function (response) {
-        //             AsyncStorage.setItem("TOKEN", response.data.token);
-        //             setTimeout(() => goHome(), 4000)
-        //         }).catch(function (err) {
-        //             if (err) {
-        //                 return goToAuth();
-        //             }
-        //         })
-        //     });
+        // goHome()
+        AsyncStorage.getItem("TOKEN")
+            .then(token => {
+                if (!token) {
+                    return setTimeout(() => goToAuth(), 4000)
+                }
+                setTimeout(() => goHome(), 4000)
+                // let data = {
+                //     token: token
+                // }
+                // axios.post(`https://agentscove.com/parser/api?email=${email}&password=${password}&signin=true`, data).then(function (response) {
+                //     AsyncStorage.setItem("TOKEN", response.data.token);
+                //     setTimeout(() => goHome(), 4000)
+                // }).catch(function (err) {
+                //     if (err) {
+                //         return goToAuth();
+                //     }
+                // })
+            });
     }
 
     render() {

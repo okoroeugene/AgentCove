@@ -11,3 +11,28 @@ Navigation.events().registerAppLaunchedListener(() => {
         }
     });
 });
+
+Navigation.setDefaultOptions({
+    topBar: {
+        title: {
+            // text: 'Title',
+            fontSize: 18,
+            // color: 'red',
+            fontFamily: 'Kastelov - Axiforma Regular',
+        },
+        // subtitle: {
+        //     text: 'Title',
+        //     fontSize: 14,
+        //     color: 'red',
+        //     fontFamily: 'Helvetica',
+        //     alignment: 'center'
+        // },
+        bottomTab: {
+            iconColor: "black",
+            selectedIconColor: "#3c6df0",
+            backgroundColor: "white",
+            fontFamily: "Kastelov - Axiforma Regular",
+            fontSize: 14
+          }
+    }
+});

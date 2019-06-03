@@ -9,7 +9,7 @@ export default class AppText extends Component {
     constructor(props) {
         super(props)
         // Put your default font styles here. 
-        this.style = [{ fontFamily: 'JosefinSans-Regular', fontSize: 14, color: "#333" }];
+        this.style = [{ fontFamily: 'Kastelov - Axiforma Regular', fontSize: 14, color: "#333" }];
         if (props.style) {
             if (Array.isArray(props.style)) {
                 this.style = this.style.concat(props.style)

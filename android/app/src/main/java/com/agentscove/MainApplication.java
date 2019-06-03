@@ -3,6 +3,7 @@ package com.agentscove;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.reactnative.ivpusic.imagepicker.PickerPackage;
 // import com.kin.reactnative.RNKinPackage;
 import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 import com.BV.LinearGradient.LinearGradientPackage;
@@ -53,6 +54,8 @@ public class MainApplication extends NavigationApplication {
         return Arrays.<ReactPackage>asList(
             // eg. new VectorIconsPackage()
             new MainReactPackage(),
+            new KinNativePackage(),
+            new PickerPackage(),
             new VectorIconsPackage(),
             new LinearGradientPackage(),
             new AsyncStoragePackage(),

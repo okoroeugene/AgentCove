@@ -22,7 +22,8 @@ import {
     CardItem,
     Item,
     Input,
-    Picker
+    Picker,
+    Spinner
 } from 'native-base';
 import Text from '../AppText';
 import LinearGradient from 'react-native-linear-gradient';
@@ -33,14 +34,14 @@ class ListProperty extends React.Component {
         super(props);
         this.state = {
             selected: "key1",
-            data: []
+            data: [],
+            isFetching: true
         };
     }
     componentDidMount() {
         Axios.put(`https://agentscove.com/parser/api?propertyList=true&category=${this.props.category}&log_id=3`).then(response => {
-            this.state.data.push(response.data.data[0].body);
-            console.log(this.state.data[0])
-            console.log("----------------DATA-----------------------")
+            this.setState({ data: Object.values(response.data.data[0].body), isFetching: false });
+            console.log(this.state.data)
         })
     }
 
@@ -53,28 +54,31 @@ class ListProperty extends React.Component {
     render() {
         return (
             <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-                <View>
-                    {
-                        this.state.data.map((items, i) => <Card>
+                {
+                    this.state.isFetching ? <View style={{ flex: 1, justifyContent: "center" }}>
+                        <Spinner size="large" color="#000547" /></View> : this.state.data.map((items, i) => <Card key={i}>
                             <View style={{ flexDirection: "row" }}>
                                 <View>
-                                    <Image style={{ width: 120, height: 120 }} source={require('../imgs/maxresdefault.jpg')} />
+                                    <Image style={{ width: 120, height: 120 }} source={{ uri: `${items.image}` }} />
                                 </View>
                                 <View style={{ flex: 1, paddingRight: 10, paddingLeft: 10, paddingTop: 5 }}>
-                                    <Text style={{ fontSize: 12 }}>{items.name}</Text>
+                                    <Text style={{ fontSize: 12 }}>{items.link}</Text>
                                     <View style={{ marginTop: 10 }}>
-                                        <Text>N200,000</Text>
+                                        <Text>{`$\u20A6${items.price}`}</Text>
                                     </View>
                                     <View style={{ flexDirection: "row" }}>
                                         <Icon type="Ionicons" name="ios-pin" style={{ fontSize: 15, marginTop: 1 }} />
-                                        <Text style={{ fontSize: 10, paddingLeft: 8 }}>EKO Atlantic city, Ahmadu Bello way, Victoria Island, Lagos</Text>
+                                        <Text style={{ fontSize: 10, paddingLeft: 8 }}>{items.city}</Text>
+                                    </View>
+                                    <View style={{ flexDirection: "row" }}>
+                                        <Icon type="Ionicons" name="ios-call" style={{ fontSize: 15, marginTop: 1 }} />
+                                        <Text style={{ fontSize: 10, paddingLeft: 8 }}>{items.contact}</Text>
                                     </View>
                                 </View>
                             </View>
                         </Card>
                         )
-                    }
-                </View>
+                }
             </ScrollView>
         );
     }

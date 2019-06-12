@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
  
-public class KinNativePackage implements ReactPackage {
+public class CoveNativePackage implements ReactPackage {
  
     @Override
     public List<ViewManager> createViewManagers(ReactApplicationContext reactContext) {
@@ -20,8 +20,8 @@ public class KinNativePackage implements ReactPackage {
     public List<NativeModule> createNativeModules(
             ReactApplicationContext reactContext) {
         List<NativeModule> modules = new ArrayList<>();
-        modules.add(new KinNativeModule(reactContext));
-        modules.add(new KinModule(reactContext));
+        modules.add(new CoveNativeModule(reactContext));
+        // modules.add(new KinModule(reactContext));
         return modules;
     }
 }

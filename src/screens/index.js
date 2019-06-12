@@ -9,6 +9,9 @@ import Drawer from './Drawer';
 import { Root } from 'native-base';
 import NewProperty from './NewProperty';
 import ListProperty from './ListProperty';
+import Profile from './Profile';
+import KinMarketPlace from './KinMarketPlace';
+import SendKin from './SendKin';
 // import { iconsMap } from './src/helpers/IconsLoader';
 
 const wrapWithToastProvider = Screen => props => (
@@ -18,8 +21,11 @@ const wrapWithToastProvider = Screen => props => (
 );
 
 export function registerScreens() {
+    Navigation.registerComponent('cove.SendKin', () => SendKin);
+    Navigation.registerComponent('cove.KinMarketPlace', () => KinMarketPlace);
     Navigation.registerComponent('cove.Drawer', () => Drawer);
     Navigation.registerComponent('cove.App', () => App);
+    Navigation.registerComponent('cove.Profile', () => wrapWithToastProvider(Profile));
     Navigation.registerComponent('cove.Home', () => wrapWithToastProvider(Home));
     Navigation.registerComponent('cove.Login', () => wrapWithToastProvider(Login));
     Navigation.registerComponent('cove.Register', () => wrapWithToastProvider(Register));

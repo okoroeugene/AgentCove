@@ -5,7 +5,8 @@ import {
     TouchableOpacity,
     Image,
     StyleSheet,
-    TouchableHighlight
+    TouchableHighlight,
+    Text
 } from 'react-native';
 import {
     Thumbnail,
@@ -22,9 +23,10 @@ import {
     CardItem,
     Item,
     Input,
-    Picker
+    Picker,
+    Fab
 } from 'native-base';
-import Text from '../AppText';
+import DefaultText from '../AppText';
 import axis from 'axios';
 import LinearGradient from 'react-native-linear-gradient';
 import { Navigation } from 'react-native-navigation';
@@ -39,13 +41,36 @@ class Home extends React.Component {
         };
     }
     componentDidMount() {
+        this.navigationEventListener = Navigation.events().bindComponent(this);
+    }
 
+    componentWillUnmount() {
+        // Not mandatory
+        if (this.navigationEventListener) {
+            this.navigationEventListener.remove();
+        }
     }
 
     onValueChange(value) {
         this.setState({
             selected: value
         });
+    }
+
+    navigationButtonPressed({ buttonId }) {
+        if (buttonId == "drawer") {
+            Navigation.mergeOptions('Drawer', {
+                sideMenu: {
+                    left: {
+                        visible: !this.state.isDrawerVisible
+                    }
+                }
+            });
+            this.setState({ isDrawerVisible: !this.state.isDrawerVisible })
+        }
+        if (buttonId == "logout") {
+            alert("logout")
+        }
     }
 
     onCategoryChange(value, category) {
@@ -72,10 +97,10 @@ class Home extends React.Component {
             <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
                 <View style={{ height: "70%", width: "100%", justifyContent: "center", alignItems: "center", backgroundColor: "#4064D7" }}>
                     <View>
-                        <Text style={{ fontSize: 45, color: "white", textAlign: "center", padding: 20 }}>Find your next home</Text>
+                        <DefaultText style={{ fontSize: 45, color: "white", textAlign: "center", padding: 20 }}>Find your next home</DefaultText>
                     </View>
                     <View>
-                        <Text style={{ color: "white" }}>Search properties for sale and for rent in Nigeria</Text>
+                        <DefaultText style={{ color: "white" }}>Search properties for sale and for rent in Nigeria</DefaultText>
                     </View>
                     <View style={{ marginTop: 20 }}>
                         <Segment style={{ backgroundColor: "transparent" }}>
@@ -83,19 +108,19 @@ class Home extends React.Component {
                                 onPress={() => this.onCategoryChange(1, "hostel")}
                                 style={[{ padding: 20, height: 40 },
                                 this.state.selectedProp == 1 ? { backgroundColor: "white" } : { backgroundColor: "#000547" }]} first>
-                                <Text style={[this.state.selectedProp == 1 ? { color: "#000547" } : { color: "white" }]}>Hostel</Text>
+                                <Text style={{ color: this.state.selectedProp == 1 ? "#000547" : "white", fontFamily: "Kastelov - Axiforma Regular" }}>Hostel</Text>
                             </Button>
                             <Button
-                                onPress={() => this.onCategoryChange(2, "appartment")}
+                                onPress={() => this.onCategoryChange(2, "apartment")}
                                 style={[{ padding: 20, height: 40 },
                                 this.state.selectedProp == 2 ? { backgroundColor: "white" } : { backgroundColor: "#000547" }]}>
-                                <Text style={[this.state.selectedProp == 2 ? { color: "#000547" } : { color: "white" }]}>Apartment</Text>
+                                <Text style={{ color: this.state.selectedProp == 2 ? "#000547" : "white", fontFamily: "Kastelov - Axiforma Regular" }}>Apartment</Text>
                             </Button>
                             <Button
                                 onPress={() => this.onCategoryChange(3, "land")}
                                 style={[{ padding: 20, height: 40 },
                                 this.state.selectedProp == 3 ? { backgroundColor: "white" } : { backgroundColor: "#000547" }]}>
-                                <Text style={[this.state.selectedProp == 3 ? { color: "#000547" } : { color: "white" }]}>Land</Text>
+                                <Text style={{ color: this.state.selectedProp == 3 ? "#000547" : "white", fontFamily: "Kastelov - Axiforma Regular" }}>Land</Text>
                             </Button>
 
                         </Segment>
@@ -104,13 +129,13 @@ class Home extends React.Component {
                                 onPress={() => this.onCategoryChange(4, "office")}
                                 style={[{ padding: 20, height: 40 },
                                 this.state.selectedProp == 4 ? { backgroundColor: "white" } : { backgroundColor: "#000547" }]} last>
-                                <Text style={[this.state.selectedProp == 4 ? { color: "#000547" } : { color: "white" }]}>Office</Text>
+                                <Text style={{ color: this.state.selectedProp == 4 ? "#000547" : "white", fontFamily: "Kastelov - Axiforma Regular" }}>Office</Text>
                             </Button>
                             <Button
-                                onPress={() => this.onCategoryChange(4, "house")}
+                                onPress={() => this.onCategoryChange(5, "house")}
                                 style={[{ padding: 20, height: 40 },
-                                this.state.selectedProp == 4 ? { backgroundColor: "white" } : { backgroundColor: "#000547" }]} last>
-                                <Text style={[this.state.selectedProp == 4 ? { color: "#000547" } : { color: "white" }]}>House</Text>
+                                this.state.selectedProp == 5 ? { backgroundColor: "white" } : { backgroundColor: "#000547" }]} last>
+                                <Text style={{ color: this.state.selectedProp == 5 ? "#000547" : "white", fontFamily: "Kastelov - Axiforma Regular" }}>House</Text>
                             </Button>
                         </Segment>
                     </View>
@@ -118,6 +143,7 @@ class Home extends React.Component {
                         <Card>
                             <View header button onPress={() => alert("This is Card Header")}>
                                 <Item bordered={false}>
+                                    <Icon style={{ marginLeft: 10, color: "#bbb" }} type="Ionicons" name="ios-search" />
                                     <Input placeholder='Where do you want to live?' style={{ fontFamily: "Kastelov - Axiforma Regular", fontSize: 14 }} />
                                 </Item>
                             </View>
@@ -186,7 +212,7 @@ class Home extends React.Component {
                                         {
                                             this.state.isProcessing ? <View style={{ justifyContent: "center" }}>
                                                 <Spinner size="large" color="#00A86B" />
-                                            </View> : <Text style={{ color: "white" }}>Search</Text>
+                                            </View> : <DefaultText style={{ color: "white" }}>Search</DefaultText>
                                         }
                                         {/* <Icon style={styles.iconAlign} name='arrow-forward' /> */}
                                     </LinearGradient>
@@ -195,6 +221,35 @@ class Home extends React.Component {
                         </Card>
                     </View>
                 </View>
+                <Fab
+                    active={this.state.active}
+                    direction="up"
+                    containerStyle={{}}
+                    style={{ backgroundColor: '#5067FF' }}
+                    position="bottomRight"
+                    onPress={() => Navigation.push(this.props.componentId, {
+                        component: {
+                            name: 'cove.NewProperty',
+                            options: {
+                                topBar: {
+                                    title: {
+                                        text: 'New Property'
+                                    }
+                                }
+                            }
+                        }
+                    })}>
+                    <Icon name="add" />
+                    {/* <Button style={{ backgroundColor: '#34A34F' }}>
+                        <Icon name="add" />
+                    </Button>
+                    <Button style={{ backgroundColor: '#3B5998' }}>
+                        <Icon name="logo-facebook" />
+                    </Button>
+                    <Button disabled style={{ backgroundColor: '#DD5144' }}>
+                        <Icon type="Ionicons" name="add" />
+                    </Button> */}
+                </Fab>
             </ScrollView>
         );
     }

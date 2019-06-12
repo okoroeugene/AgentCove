@@ -1,5 +1,6 @@
 // navigation.js
 import { Navigation } from 'react-native-navigation'
+import { iconsMap } from './helpers/IconsLoader';
 
 export const goToAuth = () => Navigation.setRoot({
     root: {
@@ -74,7 +75,13 @@ export const goHome = () => Navigation.setRoot({
                                             topBar: {
                                                 title: {
                                                     text: 'Home'
-                                                }
+                                                },
+                                                leftButtons: [
+                                                    {
+                                                        id: 'drawer',
+                                                        icon: iconsMap["ios-menu"]
+                                                    }
+                                                ],
                                             }
                                         }
                                     }

@@ -9,7 +9,7 @@ const icons = {
     "ios-person--big": [50, "#bbb"],
 
     "ios-send": [20, "#bbb"],
-    "ios-menu": [20, "#bbb"],
+    "ios-menu": [30, "#bbb"],
 
     "ios-person--active": [20, "#fff"],
     "ios-person--active--big": [50, "#fff"],
@@ -19,6 +19,7 @@ const icons = {
     "ios-people--active": [20, "#fff"],
 
     "ios-home": [20, "#bbb"],
+    "ios-log-out": [20, "#bbb"],
     "ios-bookmark": [20, "#bbb"],
     "ios-notifications": [20, "#bbb"],
     "ios-search": [20, "#bbb"],

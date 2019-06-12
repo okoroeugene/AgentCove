@@ -27,12 +27,16 @@ Navigation.setDefaultOptions({
         //     fontFamily: 'Helvetica',
         //     alignment: 'center'
         // },
-        bottomTab: {
-            iconColor: "black",
-            selectedIconColor: "#3c6df0",
-            backgroundColor: "white",
-            fontFamily: "Kastelov - Axiforma Regular",
-            fontSize: 14
-          }
+
+    },
+    bottomTab: {
+        iconColor: "black",
+        selectedIconColor: "#ccc",
+        backgroundColor: "white",
+        fontFamily: "Kastelov - Axiforma Regular",
+        fontSize: 14
+    },
+    bottomTabs: {
+        titleDisplayMode: "alwaysShow"
     }
 });

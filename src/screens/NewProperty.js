@@ -23,21 +23,28 @@ import {
     Item,
     Input,
     Picker,
-    DeckSwiper
+    DeckSwiper,
+    Form,
+    Label
 } from 'native-base';
 import Text from '../AppText';
 import LinearGradient from 'react-native-linear-gradient';
 import styles from '../styles';
 import ImagePicker from 'react-native-image-crop-picker';
 import { Images, Category, Contact } from './UploadComponents';
+import AsyncStorage from '@react-native-community/async-storage';
+import { Dropdown } from 'react-native-material-dropdown';
+import Axios from 'axios';
 
 class NewProperty extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            selected: "key1",
             selectedImages: [],
             isProcessing: false,
-            selected: 1
+            selected: 1,
+            data: []
             // data: [
             //     {
             //         text: 'Card One',
@@ -48,7 +55,17 @@ class NewProperty extends React.Component {
         };
     }
     componentDidMount() {
-
+        AsyncStorage.getItem('credentials', (err, result) => {
+            let credentials = JSON.parse(result);
+            Axios.put(`https://agentscove.com/parser/api?uploadNav=true&pos=1&log_id=${credentials.log_id}&log_username=${credentials.log_username}&log_password=${credentials.log_password}`)
+                .then(response => {
+                    this.setState({ data: response.data.data });
+                    console.log(this.state.data)
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+        });
     }
 
     onValueChange(value) {
@@ -89,10 +106,98 @@ class NewProperty extends React.Component {
         )
     };
 
+    showCategory() {
+        if (this.state.data && this.state.data[0] && this.state.data[0].category) {
+            const arrayOfObj = Object.entries(this.state.data[0].category).map((e) => ( { [e[0]]: e[1] } ));
+            console.log(arrayOfObj)
+            return (
+                <Dropdown
+                    label='-- select category --'
+                    data={arrayOfObj}
+                />
+                // Object.keys(this.state.data[0].category).forEach(e => {
+                //     <Dropdown
+                //         label='Favorite Fruit'
+                //         data={data}
+                //     />
+                // })
+            )
+        }
+    }
+
     removeFile(index) {
         const _temp = this.state.selectedImages;
         _temp.splice(index, 1);
         this.setState({ selectedImages: _temp });
+    }
+
+    propertyData() {
+        return (
+            <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+                <Content style={{ marginTop: 150 }}>
+                    <Form>
+                        <View style={{ width: "90%" }}>
+                            <Picker
+                                mode="dropdown"
+                                placeholder="Type"
+                                style={{ width: undefined }}
+                                selectedValue={this.state.selected}
+                            // onValueChange={this.onValueChange.bind(this)}
+                            >
+                                {/* <Picker.Item label="-- select category --" value="key0" /> */}
+                                {
+                                    this.showCategory()
+                                }
+                            </Picker>
+                        </View>
+                        <Item stackedLabel>
+                            <Label style={{ fontFamily: "Kastelov - Axiforma Regular", fontSize: 14, color: "#bbb" }}>Description</Label>
+                            <Input style={{ fontFamily: "Kastelov - Axiforma Regular", fontSize: 14 }} />
+                        </Item>
+                        <Item stackedLabel last>
+                            <Label style={{ fontFamily: "Kastelov - Axiforma Regular", fontSize: 14, color: "#bbb" }}>Address</Label>
+                            <Input style={{ fontFamily: "Kastelov - Axiforma Regular", fontSize: 14 }} />
+                        </Item>
+                    </Form>
+                </Content>
+            </View>
+        )
+    }
+
+    imageSelector() {
+        return (
+            <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+                <TouchableOpacity style={{ alignItems: "center", justifyContent: "center" }} onPress={() => this.pickImages()}>
+                    <Icon type="Ionicons" name="ios-cloud-upload" style={{ fontSize: 80, color: "#bbb" }} />
+                    <Text>Add multiple Images</Text>
+                </TouchableOpacity>
+                <View>
+                    <View style={{ flexDirection: "row", marginTop: 30 }}>
+                        <ScrollView
+                            contentContainerStyle={{ paddingVertical: 10 }}
+                            horizontal={true}
+                            showsHorizontalScrollIndicator={false}
+                            showsVerticalScrollIndicator={false}>
+                            {
+                                this.state.selectedImages.map((items, i) =>
+                                    <View key={i} style={{ justifyContent: "center", paddingRight: 10 }}>
+                                        <View style={{ width: 150, height: 150 }}>
+                                            <Thumbnail style={{ width: 150, height: 150 }} square large source={{ uri: items.path }} />
+                                            <Icon
+                                                type="Ionicons"
+                                                style={styles.imgOverlay}
+                                                name={"ios-close-circle"}
+                                                onPress={() => this.removeFile(i)}
+                                            />
+                                        </View>
+                                    </View>
+                                )
+                            }
+                        </ScrollView>
+                    </View>
+                </View>
+            </View>
+        )
     }
 
     handleUpload() {
@@ -126,37 +231,7 @@ class NewProperty extends React.Component {
                     </TouchableOpacity>
                 </View>
                 {
-                    this.state.selected == 1 ? <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-                        <TouchableOpacity style={{ alignItems: "center", justifyContent: "center" }} onPress={() => this.pickImages()}>
-                            <Icon type="Ionicons" name="ios-cloud-upload" style={{ fontSize: 80, color: "#bbb" }} />
-                            <Text>Add multiple Images</Text>
-                        </TouchableOpacity>
-                        <View>
-                            <View style={{ flexDirection: "row", marginTop: 30 }}>
-                                <ScrollView
-                                    contentContainerStyle={{ paddingVertical: 10 }}
-                                    horizontal={true}
-                                    showsHorizontalScrollIndicator={false}
-                                    showsVerticalScrollIndicator={false}>
-                                    {
-                                        this.state.selectedImages.map((items, i) =>
-                                            <View key={i} style={{ justifyContent: "center", paddingRight: 10 }}>
-                                                <View style={{ width: 150, height: 150 }}>
-                                                    <Thumbnail style={{ width: 150, height: 150 }} square large source={{ uri: items.path }} />
-                                                    <Icon
-                                                        type="Ionicons"
-                                                        style={styles.imgOverlay}
-                                                        name={"ios-close-circle"}
-                                                        onPress={() => this.removeFile(i)}
-                                                    />
-                                                </View>
-                                            </View>
-                                        )
-                                    }
-                                </ScrollView>
-                            </View>
-                        </View>
-                    </View> : null
+                    this.state.selected == 1 ? this.propertyData() : null
                 }
                 {
                     this.state.selected == 2 ? <Category /> : null

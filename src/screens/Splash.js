@@ -34,9 +34,9 @@ class Splash extends Component {
 
     componentDidMount() {
         // goHome()
-        AsyncStorage.getItem("TOKEN")
-            .then(token => {
-                if (!token) {
+        AsyncStorage.getItem("credentials")
+            .then(data => {
+                if (!data) {
                     return setTimeout(() => goToAuth(), 4000)
                 }
                 setTimeout(() => goHome(), 4000)

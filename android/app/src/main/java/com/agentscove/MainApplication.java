@@ -54,11 +54,11 @@ public class MainApplication extends NavigationApplication {
         return Arrays.<ReactPackage>asList(
             // eg. new VectorIconsPackage()
             new MainReactPackage(),
-            new KinNativePackage(),
             new PickerPackage(),
             new VectorIconsPackage(),
             new LinearGradientPackage(),
             new AsyncStoragePackage(),
+            new CoveNativePackage(),
             new FBSDKPackage(mCallbackManager)
         );
     }

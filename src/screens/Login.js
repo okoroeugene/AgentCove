@@ -54,15 +54,29 @@ class Login extends Component {
 
     }
 
-    doLogin(credentials) {
+    async doLogin(credentials) {
         this.showLoader('Logging In...')
-        axios.post(`https://agentscove.com/parser/api?email=${this.email}&password=${this.password}&signin=true`, credentials).then((response) => {
+        await axios.post(`https://agentscove.com/parser/api?email=${this.email}&password=${this.password}&signin=true`, credentials).then(async (response) => {
             // AsyncStorage.setItem("TOKEN", response.data.token);
-            if (response.data.data[0].error) {
-                alert(response.data.data[0].response)
+            let res = response.data.data[0];
+            if (res.error) {
+                alert(res.response)
             } else {
-                AsyncStorage.setItem("TOKEN", this.email);
+                AsyncStorage.setItem("credentials", JSON.stringify(res));
                 goHome();
+                // const json = {
+                //     'username': res.log_name,
+                //     'id': res.log_id,
+                //     'hash_passwd': res.log_password,
+                //     'create_user': true
+                // }
+                // await axios.post('https://api.agentscove.com', json)
+                //     .then((response) => {
+                //         console.log(response.data)
+                //     })
+                //     .catch((err) => {
+                //         console.log(err)
+                //     })
             }
             this.hideLoader();
         }).catch(function (err) {

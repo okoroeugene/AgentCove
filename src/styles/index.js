@@ -11,7 +11,7 @@ export default StyleSheet.create({
 	},
 	inputFormStyle: {
 		fontFamily: 'Sofia Pro Regular',
-		fontSize: 18
+		fontSize: 16
 	},
 	backgroundImageWrapper: {
 		position: "absolute",

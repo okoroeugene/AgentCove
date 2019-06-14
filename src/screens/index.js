@@ -12,6 +12,7 @@ import ListProperty from './ListProperty';
 import Profile from './Profile';
 import KinMarketPlace from './KinMarketPlace';
 import SendKin from './SendKin';
+import PropertyDetails from './PropertyDetails';
 // import { iconsMap } from './src/helpers/IconsLoader';
 
 const wrapWithToastProvider = Screen => props => (
@@ -21,6 +22,7 @@ const wrapWithToastProvider = Screen => props => (
 );
 
 export function registerScreens() {
+    Navigation.registerComponent('cove.PropertyDetails', () => PropertyDetails);
     Navigation.registerComponent('cove.SendKin', () => SendKin);
     Navigation.registerComponent('cove.KinMarketPlace', () => KinMarketPlace);
     Navigation.registerComponent('cove.Drawer', () => Drawer);

@@ -87,7 +87,7 @@ class Register extends Component {
                         borderRadius: 90 / 2,
                         borderColor: "#F1F1F1",
                         borderWidth: 3
-                    }} source={require("../imgs/logo.png")} />
+                    }} source={require("../imgs/logo_main.jpeg")} />
                     <Form>
                         <Item rounded last>
                             <Label style={styles.placeholder}><Icon style={styles.defaultGrayTextColor} name="person" /></Label>

@@ -60,7 +60,10 @@ class Splash extends Component {
 
             // </Background>
             <View style={{ flex: 1, backgroundColor: "#CCC", justifyContent: "center", alignItems: "center" }}>
-                <Image style={{ width: 100, height: 100 }} source={require('../imgs/logo.png')} />
+                <Image style={{ width: 130, height: 130, borderRadius: 130 / 2 }} source={require('../imgs/logo_main.jpeg')} />
+                <View style={{ marginTop: 10 }}>
+                    <Text style={{ fontSize: 16 }}>Initializing...</Text>
+                </View>
             </View>
         );
     }

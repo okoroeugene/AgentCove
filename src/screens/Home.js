@@ -139,7 +139,7 @@ class Home extends React.Component {
                             </Button>
                         </Segment>
                     </View>
-                    <View style={{ width: "90%", margin: 20 }}>
+                    {/* <View style={{ width: "90%", margin: 20 }}>
                         <Card>
                             <View header button onPress={() => alert("This is Card Header")}>
                                 <Item bordered={false}>
@@ -154,7 +154,6 @@ class Home extends React.Component {
                                         placeholder="Type"
                                         style={{ width: undefined }}
                                         selectedValue={this.state.selected}
-                                    // onValueChange={this.onValueChange.bind(this)}
                                     >
                                         <Picker.Item label="Wallet" value="key0" />
                                     </Picker>
@@ -165,7 +164,6 @@ class Home extends React.Component {
                                         placeholder="Bed"
                                         style={{ width: undefined }}
                                         selectedValue={this.state.selected}
-                                    // onValueChange={this.onValueChange.bind(this)}
                                     >
                                         <Picker.Item label="Wallet" value="key0" />
                                     </Picker>
@@ -176,7 +174,6 @@ class Home extends React.Component {
                                         placeholder="Max price"
                                         style={{ width: undefined }}
                                         selectedValue={this.state.selected}
-                                    // onValueChange={this.onValueChange.bind(this)}
                                     >
                                         <Picker.Item label="Wallet" value="key0" />
                                     </Picker>
@@ -206,7 +203,6 @@ class Home extends React.Component {
                                             height: 50,
                                             width: "100%",
                                             alignItems: "center",
-                                            // borderRadius: 3,
                                             justifyContent: "center"
                                         }, this.state.isProcessing ? { opacity: 0.5 } : { opacity: 1 }]}>
                                         {
@@ -214,18 +210,17 @@ class Home extends React.Component {
                                                 <Spinner size="large" color="#00A86B" />
                                             </View> : <DefaultText style={{ color: "white" }}>Search</DefaultText>
                                         }
-                                        {/* <Icon style={styles.iconAlign} name='arrow-forward' /> */}
                                     </LinearGradient>
                                 </TouchableOpacity>
                             </View>
                         </Card>
-                    </View>
+                    </View> */}
                 </View>
                 <Fab
                     active={this.state.active}
                     direction="up"
                     containerStyle={{}}
-                    style={{ backgroundColor: '#5067FF' }}
+                    style={{ backgroundColor: '#DB0000' }}
                     position="bottomRight"
                     onPress={() => Navigation.push(this.props.componentId, {
                         component: {

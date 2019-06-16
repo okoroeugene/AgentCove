@@ -59,8 +59,8 @@ export default class Drawer extends Component {
             if (err) {
                 console.log(err);
             }
+            goToAuth();
         })
-        goToAuth();
     }
 
     render() {
@@ -99,7 +99,7 @@ export default class Drawer extends Component {
                                         <Text style={{ fontSize: 15, color: "white" }}>Hi {this.state.credentials.log_name}</Text>
                                     </View>
                                     <View>
-                                        <Text style={{ color: "#bbb", fontSize: 18 }}>Welcome to AgentCove</Text>
+                                        <Text style={{ color: "#bbb", fontSize: 18 }}>Welcome to AgentsCove</Text>
                                     </View>
                                 </View>}
                             >
@@ -149,14 +149,14 @@ export default class Drawer extends Component {
                                 <Icon type="Ionicons" name="ios-cash" />
                                 <Text style={{ marginTop: 4, paddingHorizontal: 10 }}>KIN Market Place</Text>
                             </TouchableOpacity>
-                            <View style={{ flexDirection: "row", padding: 10 }}>
+                            <TouchableOpacity style={{ flexDirection: "row", padding: 10 }}>
                                 <Icon type="Ionicons" name="ios-list" />
                                 <Text style={{ marginTop: 6, paddingHorizontal: 10 }}>Properties</Text>
-                            </View>
-                            <View style={{ flexDirection: "row", padding: 10 }}>
+                            </TouchableOpacity>
+                            {/* <View style={{ flexDirection: "row", padding: 10 }}>
                                 <Icon type="Ionicons" name="ios-search" />
                                 <Text style={{ marginTop: 6, paddingHorizontal: 10 }}>Search</Text>
-                            </View>
+                            </View> */}
                             <TouchableOpacity onPress={() => this.logout()} style={{ flexDirection: "row", padding: 10 }}>
                                 <Icon type="Ionicons" name="ios-log-out" />
                                 <Text style={{ marginTop: 6, paddingHorizontal: 10 }}>Logout</Text>

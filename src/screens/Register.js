@@ -28,21 +28,23 @@ class Register extends Component {
                 }
             })
         }
-        this.doRegister({
-            username: this.username,
-            password: this.password,
-            email: this.email
-        });
+        if (this.email == null || this.fullname == null) {
+            alert("Invalid credentials");
+            return;
+        }
+        else {
+            this.doRegister();
+        }
         // MainTabs();
     };
 
     doRegister(credentials) {
         this.showLoader('Please wait...')
-        axios.post(`https://agentscove.com/parser/api?email=${this.email}&name=${this.username}&signup=true`, credentials).then((response) => {
+        axios.put(`https://agentscove.com/parser/api?email=${this.email}&name=${this.fullname}&signup=true`).then((response) => {
             this.hideLoader();
             if (response.data.data[0].error) {
                 alert(response.data.data[0].response)
-            } else{
+            } else {
                 alert(response.data.data[0].response)
             }
             // AsyncStorage.setItem("TOKEN", response.data.token);
@@ -53,6 +55,7 @@ class Register extends Component {
             // goHome();
             console.log(response.data);
         }).catch(function (err) {
+            alert(err);
             if (err) {
                 this.hideLoader();
             }
@@ -103,15 +106,15 @@ class Register extends Component {
                         <Item style={{ marginTop: 10 }} rounded last>
                             <Label style={styles.placeholder}><Icon style={styles.defaultGrayTextColor} name="person" /></Label>
                             <Input
-                                placeholder="username"
+                                placeholder="full name"
                                 placeholderTextColor="#CCC"
-                                onChangeText={u => this.username = u}
+                                onChangeText={u => this.fullname = u}
                                 style={styles.defaultFont}
                                 autoCapitalize={"none"}
                                 style={styles.inputFormStyle}
                             />
                         </Item>
-                        <Item style={{ marginTop: 10 }} rounded last>
+                        {/* <Item style={{ marginTop: 10 }} rounded last>
                             <Label style={styles.placeholder}><Icon style={styles.defaultGrayTextColor} name="ios-unlock" /></Label>
                             <Input
                                 placeholder="password"
@@ -130,7 +133,7 @@ class Register extends Component {
                                 secureTextEntry={true}
                                 style={styles.inputFormStyle}
                             />
-                        </Item>
+                        </Item> */}
                     </Form>
                     <View style={styles.button}>
                         <TouchableOpacity
@@ -140,12 +143,12 @@ class Register extends Component {
                             <LinearGradient
                                 start={{ x: 0.0, y: 0.25 }} end={{ x: 0.5, y: 1.0 }}
                                 locations={[0, 0.5, 0.6]}
-                                colors={['#B43D3B', '#ED483A', '#B43D3B']}
+                                colors={['#000547', '#4064D7', '#000547']}
                                 style={[{
                                     height: 50,
                                     width: "100%",
                                     alignItems: "center",
-                                    borderRadius: 3,
+                                    borderRadius: 50,
                                     justifyContent: "center"
                                 }, this.state.isProcessing ? { opacity: 0.5 } : { opacity: 1 }]}>
                                 {

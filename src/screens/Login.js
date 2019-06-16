@@ -17,7 +17,7 @@ import {
     Toast,
     Spinner
 } from 'native-base';
-import axios from 'axios';
+// import axios from 'axios';
 import Text from '../AppText';
 import styles from '../styles';
 import LinearGradient from 'react-native-linear-gradient';
@@ -25,6 +25,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { goHome } from '../Navigation';
 import Loader from './Loader';
 import { Navigation } from 'react-native-navigation';
+import Axios from 'axios';
 // import Config from 'react-native-config';
 
 // const BASE_URL = Config.BASE_URL;
@@ -37,49 +38,38 @@ class Login extends Component {
     };
 
     componentDidMount() {
-        Navigation.mergeOptions('Login', {
-            bottomTab: {
-                badge: '3'
-            }
-        });
+        // Navigation.mergeOptions('Login', {
+        //     bottomTab: {
+        //         badge: '3'
+        //     }
+        // });
     }
 
     onLogin = () => {
-        this.doLogin({
-            username: this.username,
-            password: this.password
-        });
+        if (this.email == null || this.password == null) {
+            alert("Invalid credentials");
+            return;
+        }
+        this.doLogin();
     }
+
     Register = () => {
 
     }
 
-    async doLogin(credentials) {
-        this.showLoader('Logging In...')
-        await axios.post(`https://agentscove.com/parser/api?email=${this.email}&password=${this.password}&signin=true`, credentials).then(async (response) => {
-            // AsyncStorage.setItem("TOKEN", response.data.token);
+    doLogin() {
+        this.showLoader('Logging In...');
+        Axios.put(`https://agentscove.com/parser/api?email=${this.email}&password=${this.password}&signin=${true}`).then((response) => {
             let res = response.data.data[0];
             if (res.error) {
+                this.hideLoader();
                 alert(res.response)
             } else {
                 AsyncStorage.setItem("credentials", JSON.stringify(res));
                 goHome();
-                // const json = {
-                //     'username': res.log_name,
-                //     'id': res.log_id,
-                //     'hash_passwd': res.log_password,
-                //     'create_user': true
-                // }
-                // await axios.post('https://api.agentscove.com', json)
-                //     .then((response) => {
-                //         console.log(response.data)
-                //     })
-                //     .catch((err) => {
-                //         console.log(err)
-                //     })
             }
-            this.hideLoader();
-        }).catch(function (err) {
+        }).catch((err) => {
+            alert(err)
             if (err) {
                 this.hideLoader();
             }
@@ -147,12 +137,12 @@ class Login extends Component {
                                 <LinearGradient
                                     start={{ x: 0.0, y: 0.25 }} end={{ x: 0.5, y: 1.0 }}
                                     locations={[0, 0.5, 0.6]}
-                                    colors={['#B43D3B', '#ED483A', '#B43D3B']}
+                                    colors={['#000547', '#4064D7', '#000547']}
                                     style={[{
                                         height: 50,
                                         width: "100%",
                                         alignItems: "center",
-                                        borderRadius: 3,
+                                        borderRadius: 50,
                                         justifyContent: "center"
                                     }, this.state.isProcessing ? { opacity: 0.5 } : { opacity: 1 }]}>
                                     {

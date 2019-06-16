@@ -70,7 +70,8 @@ class NewProperty extends React.Component {
             selectedSecurity: undefined,
             catID: 0,
             cityID: 0,
-            instID: 0
+            instID: 0,
+            base64: ""
         };
         this.subCategory = {
             land: ["Sales", "Rent"],
@@ -231,18 +232,35 @@ class NewProperty extends React.Component {
     // }
 
     pickImages = async () => {
+        // ImagePicker.openPicker({
+        //     cropping: true,
+        //     includeBase64: true
+        // }).then(image => {
+        //     console.log(image);
+        //     this.setState({
+        //         avatarSource: image.path,
+        //         base64: image.data,
+        //         type: image.mime
+        //     }, () => {
+        //         this._updateImage();
+        //     });
+        // });
+        const files = this.state.selectedImages;
         ImagePicker.openPicker({
-            cropping: true,
+            multiple: true,
             includeBase64: true
-        }).then(image => {
-            console.log(image);
-            this.setState({
-                avatarSource: image.path,
-                base64: image.data,
-                type: image.mime
-            }, () => {
-                this._updateImage();
+        }).then(images => {
+            images.forEach(element => {
+                files.push(element.path)
+                // files.push({
+                //     base64: element.data,
+                //     mime: element.mime,
+                //     path: element.path
+                // });
             });
+            this.setState({
+                selectedImages: files.reverse()
+            })
         });
     }
 
@@ -267,20 +285,28 @@ class NewProperty extends React.Component {
                 };
 
                 console.log(file)
-                const data = new FormData();
+                // const data = new FormData();
 
-                data.append("file", file);
-                data.append("name", `${result}`);
-
-                const res = await Axios({
-                    method: "POST",
-                    data: JSON.stringify({
-                        propertyUpload: true,
-                        formData: data
-                    }),
-                    url: API,
-                });
-                console.log(res.data)
+                // data.append("file", file);
+                // data.append("name", `${result}`);
+                var data = {
+                    pptyUpload: true,
+                    file: file,
+                    name: result
+                }
+                Axios.post(`${API}`, JSON.stringify(data))
+                    .then((response) => {
+                        console.log(response.data)
+                    })
+                // const res = await Axios({
+                //     method: "POST",
+                //     data: JSON.stringify({
+                //         propertyUpload: true,
+                //         formData: data
+                //     }),
+                //     url: ,
+                // });
+                // console.log(res.data)
             } catch (e) {
                 console.log(e.message)
             }
@@ -393,7 +419,7 @@ class NewProperty extends React.Component {
                                                         selectedColor={"#5cb85c"}
                                                         selected={this.state.selectSubCategory == items ? true : false}
                                                     />
-                                                    <Text>{items}</Text>
+                                                    <Text style={{ fontSize: 12 }}>{items}</Text>
                                                 </TouchableOpacity>
                                             </View>
                                         )
@@ -407,6 +433,7 @@ class NewProperty extends React.Component {
                                 <Input
                                     // value={this.state.propertyName}
                                     onChangeText={(e) => this.propertyName = e}
+                                    returnKeyType="next"
                                     style={{ fontFamily: "Kastelov - Axiforma Regular", fontSize: 14 }} />
                             </Item>
                             <Item stackedLabel last>
@@ -414,6 +441,7 @@ class NewProperty extends React.Component {
                                 <Input
                                     // value={this.state.price}
                                     onChangeText={e => this.price = e}
+                                    returnKeyType="next"
                                     keyboardType="numeric"
                                     style={{ fontFamily: "Kastelov - Axiforma Regular", fontSize: 14 }} />
                             </Item>
@@ -425,6 +453,7 @@ class NewProperty extends React.Component {
                                 <Label style={{ fontFamily: "Kastelov - Axiforma Regular", fontSize: 14, color: "#bbb" }}>Address</Label>
                                 <Input
                                     // value={this.state.address}
+                                    returnKeyType="send"
                                     onChangeText={e => this.address = e}
                                     style={{ fontFamily: "Kastelov - Axiforma Regular", fontSize: 14 }} />
                             </Item>
@@ -467,8 +496,12 @@ class NewProperty extends React.Component {
                 <View style={{ alignItems: "center" }}>
                     <Thumbnail style={{ width: 150, height: 150 }} source={require('../imgs/payment-success.png')} />
                     <View style={{ marginTop: 20 }}>
-                        <Text style={{ fontSize: 24, color: "#bbb" }}>Upload Success!</Text>
-                    </View></View>
+                        <Text style={{ fontSize: 20, color: "#bbb" }}>Upload Success!</Text>
+                    </View>
+                    <View style={{ marginTop: 4 }}>
+                        <Text style={{ fontSize: 24, color: "red" }}>You have earned 10 KIN</Text>
+                    </View>
+                </View>
                 <TouchableOpacity
                     style={{ padding: 20 }}
                     onPress={() => goHome()}
@@ -515,7 +548,7 @@ class NewProperty extends React.Component {
                                                     selected={this.state.selectedSecurity && this.state.selectedSecurity.includes(e) ? true : false}
                                                 />
                                                 <View style={{ width: 120, alignItems: "center" }}>
-                                                    <Text style={{ textAlign: "center" }}>{e}</Text>
+                                                    <Text style={{ textAlign: "center", fontSize: 12 }}>{e}</Text>
                                                 </View>
                                             </TouchableOpacity>
                                         </View>
@@ -540,7 +573,7 @@ class NewProperty extends React.Component {
                                                     selected={this.state.selectedSecurity && this.state.selectedSecurity.includes(e) ? true : false}
                                                 />
                                                 <View style={{ width: 120, alignItems: "center" }}>
-                                                    <Text style={{ textAlign: "center" }}>{e}</Text>
+                                                    <Text style={{ textAlign: "center", fontSize: 12 }}>{e}</Text>
                                                 </View>
                                             </TouchableOpacity>
                                         </View>

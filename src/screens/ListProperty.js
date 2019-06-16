@@ -16,6 +16,7 @@ import Text from '../AppText';
 import LinearGradient from 'react-native-linear-gradient';
 import Axios from 'axios';
 import { Navigation } from 'react-native-navigation';
+var base64 = require('base-64');
 
 class ListProperty extends React.Component {
     constructor(props) {
@@ -66,7 +67,7 @@ class ListProperty extends React.Component {
                                             <Image style={{ width: 120, height: 120 }} source={{ uri: `${items.image}` }} />
                                         </View>
                                         <View style={{ flex: 1, paddingRight: 10, paddingLeft: 10, paddingTop: 5 }}>
-                                            <Text style={{ fontSize: 12 }}>{items.link}</Text>
+                                            <Text style={{ fontSize: 12 }}>{base64.decode(items.name)}</Text>
                                             <View style={{ marginTop: 10 }}>
                                                 <Text>{`\u20A6${items.price}`}</Text>
                                             </View>

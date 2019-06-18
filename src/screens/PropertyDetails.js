@@ -48,7 +48,7 @@ class PropertyDetails extends React.Component {
         let e = [];
         AsyncStorage.getItem('credentials', (err, result) => {
             let credentials = JSON.parse(result);
-            Axios.put(`https://agentscove.com/parser/api?property=true&url=${this.props.url}&log_id=${credentials.log_id}&log_password=${credentials.log_password}&log_username=${credentials.log_username}`).then(response => {
+            Axios.get(`https://agentscove.com/parser/api?property=true&url=${this.props.url}&log_id=${credentials.log_id}&log_password=${credentials.log_password}&log_username=${credentials.log_username}`).then(response => {
                 this.setState({
                     data: response.data.data[0],
                     isFetching: false,

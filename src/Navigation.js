@@ -15,6 +15,8 @@ export const goToAuth = () => Navigation.setRoot({
                             bottomTab: {
                                 fontSize: 12,
                                 text: 'Sign In',
+                                selectedTextColor:"white",
+                                selectedIconColor:"white",
                                 icon: require('./imgs/signIn.png')
                             }
                         }
@@ -28,12 +30,23 @@ export const goToAuth = () => Navigation.setRoot({
                             bottomTab: {
                                 text: 'Sign Up',
                                 fontSize: 12,
+                                selectedTextColor:"white",
+                                selectedIconColor:"white",
                                 icon: require('./imgs/signUp.png')
                             }
                         }
                     },
                 },
             ],
+            options: {
+                bottomTabs: {
+                    backgroundColor: "#9C9E9B",
+                },
+                bottomTab: {
+                    iconColor: "white",
+                    textColor: "white"
+                }
+            }
         }
     }
 });

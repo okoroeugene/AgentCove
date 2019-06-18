@@ -28,7 +28,7 @@ class ListProperty extends React.Component {
         };
     }
     componentDidMount() {
-        Axios.put(`https://agentscove.com/parser/api?propertyList=true&category=${this.props.category}&log_id=3`).then(response => {
+        Axios.get(`https://agentscove.com/parser/api?propertyList=true&category=${this.props.category}&log_id=3`).then(response => {
             this.setState({ data: Object.values(response.data.data[0].body), isFetching: false });
             console.log(this.state.data)
         })

@@ -1,4 +1,4 @@
-package com.agentscove;
+package com.agent_scove;
 
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.NativeModule;

@@ -28,7 +28,7 @@ class Profile extends React.Component {
         AsyncStorage.getItem('credentials', (err, result) => {
             let credentials = JSON.parse(result);
             console.log(credentials)
-            Axios.put(`https://agentscove.com/parser/api?log_id=${credentials.log_id}&log_username=${credentials.log_username}
+            Axios.get(`https://agentscove.com/parser/api?log_id=${credentials.log_id}&log_username=${credentials.log_username}
             &log_password=${credentials.log_password}&profile_username=${credentials.log_username}&profile=true`)
                 .then(result => {
                     this.setState({ credentials: result.data.data[0] })

@@ -1,4 +1,4 @@
-package com.agentscove;
+package com.agent_scove;
 
 public class Status
 {
